@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<body>
+<form method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+
+{% block content %}
+<h1>{{ title }}</h1>
+{% if products %}
+<ul>
+{% for product in products %}
+<li>
+{{ product.name }}
+{{ product.price }}
+</li>
+{% endfor %}
+    {/ul}
+    {% if page_obj.has_previous or
+page_obj.has_next %}
+<nav>
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+{% endif %}
+{% if page_obj.has_next %}
+<a href="?page={{page_obj.next_page_number }}">следующая</a>
+{% endif %}
+</nav>
+{% endif %}
+{% endblock %}
+<p>Нет товаров в каталоге.</p>
+
+
+<button type="submit">Save</button>
+</form>
+</body>
+</html>
